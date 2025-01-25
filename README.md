@@ -1,4 +1,3 @@
-# java-practice
-practicing java programs 
+Portfolio website 
 <br>
 Author - Siddharth Darkunde
