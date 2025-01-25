@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siddharth's - Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --accent-color: #2a2a2a;
+            --highlight-color: #3a3a3a;
+            --green: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 310px;
+            padding: 1.5rem;
+            background-color: var(--accent-color);
+            border-right: 1px solid var(--highlight-color);
+            overflow-y: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .projects-section {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .right-sidebar {
+            width: 300px;
+            padding: 2rem;
+            background-color: var(--accent-color);
+            border-left: 1px solid var(--highlight-color);
+            overflow-y: auto;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .profile h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile p {
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+
+        .online-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--green);
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .skill {
+            background-color: var(--highlight-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #cccccc;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '</>';
+            font-size: 1rem;
+            background-color: var(--highlight-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .project {
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .project.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+        .project-content {
+            flex: 1;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tag {
+            background-color: var(--highlight-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--highlight-color);
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 0.5rem;
+            background-color: var(--accent-color);
+            border: 1px solid var(--highlight-color);
+            color: var(--text-color);
+            border-radius: 4px;
+        }
+
+        .contact-form button {
+            padding: 0.5rem 1rem;
+            background-color: var(--highlight-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .education-item {
+            margin-bottom: 1rem;
+        }
+
+        .education-item h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .education-item p {
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar, .right-sidebar {
+                width: 100%;
+                border: none;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+
+            .projects-section {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="img/profile-pic (2).png" alt="Siddharth Darkunde" class="profile-img">
+                <h1>Siddharth Darkunde <span class="online-status"></span></h1>
+                <p>siddhartdarkunde2444@gmail.com</p>
+               
+            </div>
+            <div class="skills">
+                <span class="skill">Java</span>
+                <span class="skill">Git</span>
+                <span class="skill">Github</span>
+                <span class="skill">C</span>
+                <span class="skill">C++</span>
+                <span class="skill">HTML</span>
+                <span class="skill">CSS</span>
+                <span class="skill">Javascript</span>
+
+            </div>
+            <div class="section">
+                <h2>Bio</h2>
+                <p>Welcome to my portfolio! I'm a web developer passionate about exploring technology. Let's create something amazing together.</p>
+            </div>
+            <div class="section">
+                <p><strong>Fresher</strong> as a Developer</p>
+                <p><strong> Projects</strong></p>
+            </div>
+            <div class="section">
+                <h2>Education</h2>
+                <div class="education-item">
+                    <h3> MCA</h3>
+                    <p>KJEI's Trinity Academy of Engineering</p>
+                    <p>Aug 2024 - Current</p>
+                </div>
+                <div class="education-item">
+                    <h3>BSc Computer Science</h3>
+                    <p>BPHE Society's Ahmednagar College</p>
+                    <p>Aug 2021 - Mar 2024</p>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="projects-section">
+                <section class="section">
+                    <h2 class="section-title">Projects</h2>
+                    <p>I design and code beautifully simple web applications that solve a problem, and help to automate tasks.</p>
+                    <div class="project">
+                        <img src="img/list.png" alt="todo-list" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">todolist - task Management System</h3>
+                            <p class="project-description">task Management System to manage tasks .</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React JS</span>
+                                <span class="project-tag">Express JS</span>
+                                <span class="project-tag">Node JS</span>
+                                <span class="project-tag">Mongo DB</span>
+                                <span class="project-tag">Stripe</span>
+                                <span class="project-tag">Tailwind CSS</span>
+                            </div>
+                            <a href="https://to-do-list-kohl-iota.vercel.app/" class="button" target="_blank">View Live</a>
+                            <a href="https://github.com/SiddharthDarkunde/To-Do-List" class="button">Github</a>
+                        </div>
+                    </div>
+                    <div class="project">
+                        <img src="https://via.placeholder.com/100" alt="Book It - Transport" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">todo list Booking System</h3>
+                            <p class="project-description">Transport Management System to manage transport reservations at Acroopolis Institute.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React JS</span>
+                                <span class="project-tag">Express JS</span>
+                                <span class="project-tag">Node JS</span>
+                                <span class="project-tag">Mongo DB</span>
+                                <span class="project-tag">Tailwind CSS</span>
+                            </div>
+                            <a href="#" class="button">View Live</a>
+                            <a href="#" class="button">Github</a>
+                        </div>
+                    </div>
+                    <div class="project">
+                        <img src="https://via.placeholder.com/100" alt="Book It - Hall" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Book It - Hall Booking System</h3>
+                            <p class="project-description">Hall Booking System to manage hall reservations at Acroopolis Institute.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React JS</span>
+                                <span class="project-tag">Express JS</span>
+                                <span class="project-tag">Node JS</span>
+                                <span class="project-tag">Mongo DB</span>
+                                <span class="project-tag">Tailwind CSS</span>
+                            </div>
+                            <a href="#" class="button">View Live</a>
+                            <a href="#" class="button">Github</a>
+                        </div>
+                    </div>
+                    <div class="project">
+                        <img src="https://via.placeholder.com/100" alt="Student Management System" class="project-image">
+                        <div class="project-content">
+                            <h3 class="project-title">Student Management System</h3>
+                            <p class="project-description">Comprehensive system for managing student data and academic processes.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">VB.Net</span>
+                                <span class="project-tag">MS Access</span>
+                                <span class="project-tag">Flat Design</span>
+                            </div>
+                            <a href="#" class="button">View Live</a>
+                            <a href="#" class="button">Github</a>
+                        </div>
+                    </div>
+                </section>
+                <section class="section">
+                    <h2 class="section-title">Contact</h2>
+                    <form class="contact-form">
+                        <input type="text" placeholder="John doe" required>
+                        <input type="email" placeholder="john@gmail.com" required>
+                        <input type="tel" placeholder="+91-7778889999" required>
+                        <textarea placeholder="Your Message Here..." required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </section>
+            </div>
+            <aside class="right-sidebar">
+                <section class="section">
+                    <h2 class="section-title">Experiences</h2>
+                    <p>I've crafted a web app for Acropolis Institute of Technology and Research. Built with MERN, it handles hall bookings seamlessly and is actively maintained for ongoing use.</p>
+                </section>
+                <section class="section">
+                    <h2 class="section-title">Achievements</h2>
+                    <div class="skills">
+                        <span class="skill">HackSquad 2023</span>
+                        <span class="skill">Hacktoberfest 2023</span>
+                    </div>
+                    <div class="social-icons">
+                        <svg class="social-icon" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        <svg class="social-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <svg class="social-icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        <svg class="social-icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </div>
+                </section>
+            </aside>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const projects = document.querySelectorAll('.project');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            projects.forEach(project => {
+                observer.observe(project);
+            });
+
+            const form = document.querySelector('.contact-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                form.style.transition = 'opacity 0.5s';
+                form.style.opacity = '0';
+                setTimeout(() => {
+                    form.innerHTML = '<p>Thank you for your message!</p>';
+                    form.style.opacity = '1';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
